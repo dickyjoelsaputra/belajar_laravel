@@ -1,0 +1,125 @@
+composer create-project laravel/laravel example-app
+ARTISAN : CTRL SHIFT P
+
+php artisan serve
+
+php artisan migrate
+
+// jalankan migrasi
+php artisan migrate
+
+// tambah file migration
+php artisan make:migration create_students_table
+
+//tambah kolom ke tabel migrasi
+php artisan make:migration add_gender_colum_to_students_table
+
+// rollback pada state/batch migrate sebelumnya
+php artisan migrate:rollback
+tambahkan --step=2 , berapa state yang dihapus
+
+// merubah kolom pada tabel , tambahkan method ->change() , pada function up and down
+// membutuhkan doctrine/dbal
+// note untuk ->nullabel() menjadi ->nullabel(false) ketika down
+composes require doctrine/dbal
+php artisan make:migration change_gender_attributes_in_students_table
+
+// menambakan relasi foreign key ke table yang sudah ada
+php artisan make:migration add_class_id_colum_to_students_table
+$table->unsignedBigInteger('class_id')->required();
+$table->foreign('class_id')->references('id')->on('class');
+// untuk drop nya
+// untuk rule supaya class tidak bisa di hapus jika masih ada yang mererensikan
+->onDelete('restrict');
+
+// membuat Model
+php artisan make:model Student
+// memberitahu laravel bahwa model memiliki database
+protected $table = 'students';
+// memberitahu laravel model primary key dari database
+protected $primaryKey = 'student_id';
+// memberitahu laravel model primary key dari database bukan int
+protected $keyType = 'string';
+// table timestamp dihapus
+protected $timestamps = false;
+
+//controller
+php artisan make:controller StudentController
+
+php artisan make:migration add_unique_rule_in_class_table
+
+// role table
+/untuk up
+$table->string('name')->unique()->change();
+//untuk down
+$table->dropUnique('class_name_unique');
+
+
+//seeding
+php artisan make:seeder ClassRoomSeeder
+php artisan db:seed --class=ClassRoomSeeder
+
+// seeding secara bersamaa
+php artisan db:seed
+
+// faker
+composer require fakerphp/faker
+
+// relation
+student -> class
+many to one
+class -> student
+one to many
+
+// many to many
+php artisan make:migration create_extracurriculars_table
+//membuat tabel pivot
+php artisan make:migration create_student_extracurricular_table
+
+// nested relationship
+
+// validation
+php artisan make:request StudentCreateRequest
+
+// soft delete
+    use SoftDeletes;
+
+// paginate
+
+
+// add image
+php artisan make:migration add_image_column_to_students_table
+
+FILESYSTEM_DISK=local
+FILESYSTEM_DISK=public // ini
+https://laravel.com/docs/9.x/filesystem
+
+folder storage di hubungkan dengan folder public
+php artisan storage:link
+
+
+// users dengan role
+php artisan make:migration create_roles_table
+php artisan make:seeder RoleSeeder
+php artisan make:model Role
+php artisan db:seed --class=RoleSeeder
+
+php artisan make:migration add_role_id_column_to_users_table
+
+// menggunakan middlewere
+php artisan make:controller AuthController
+
+
+// ketika sudah login , prevent login page
+kernel -> guest
+
+
+// middlewere untuk role
+bisa menggunakan :
+spatie - role permission
+policy - laravel
+middlewere
+php artisan make:middleware MustAdmin
+
+
+
