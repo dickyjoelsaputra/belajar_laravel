@@ -27,15 +27,15 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
 
-        // return back()->withErrors([
-        //     'email' => 'The provided credentials do not match our records.',
-        // ])->onlyInput('email');
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
 
-        session()->flash('status', 'failed');
-        session()->flash('message', $request->email . ' Gak ada / Salah Cok');
-        session()->flash('email', $request->email);
+        // session()->flash('status', 'failed');
+        // session()->flash('message', $request->email . ' Gak ada / Salah Cok');
+        // session()->flash('email', $request->email);
 
-        return redirect('/login');
+        // return redirect('/login');
     }
     public function logout(Request $request)
     {

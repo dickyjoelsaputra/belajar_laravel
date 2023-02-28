@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\ClassRoom;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\New_;
 use App\Models\Extracurricular;
@@ -134,7 +135,7 @@ class StudentController extends Controller
         $searchstudent = $request->searchstudent;
 
 
-        $students = Student::where('name', 'LIKE', '%' . $searchstudent . '%')
+        $students = Student::orderByDesc('created_at')->where('name', 'LIKE', '%' . $searchstudent . '%')
             ->orWhere('gender', $searchstudent)
             ->orWhere('nim', 'LIKE', '%' . $searchstudent . '%')
             ->orWhereHas('class', function ($query) use ($searchstudent) {
@@ -148,10 +149,12 @@ class StudentController extends Controller
         return view('student.student', ['students' => $students]);
     }
 
-    public function show($id)
+    public function show($slug)
     {
         // $student = Student::find($id);
-        $student = Student::with(['class.teachers', 'extracurriculars'])->findOrFail($id);
+        // $student = Student::with(['class.teachers', 'extracurriculars'])->findOrFail($id);
+
+        $student = Student::with(['class.teachers', 'extracurriculars'])->where('slug', $slug)->first();
         return view('student.student-detail', ['student' => $student]);
     }
 
@@ -198,7 +201,7 @@ class StudentController extends Controller
         }
 
         $request['image'] = $newName;
-
+        // $request['slug'] = Str::slug($request->name, '_');
         $student = Student::create($request->only(['name', 'nim', 'gender', 'class_id', 'image']));
         $student->extracurriculars()->attach($request->extracurricular_id);
 
@@ -251,7 +254,9 @@ class StudentController extends Controller
         } else {
             $newName = $student->image;
         }
+
         $request['image'] = $newName;
+        // $request['slug'] = Str::slug($request->name, '_');
         $student->update($request->only(['name', 'nim', 'gender', 'class_id', 'image']));
         $student->extracurriculars()->sync($request->extracurricular_id);
         // $student->update($request->all());
@@ -312,4 +317,14 @@ class StudentController extends Controller
         }
         return redirect('/student-deleted');
     }
+
+    // public function massupdate()
+    // {
+    //     $collection = collect(Student::all());
+    // $collection = collect(Student::whereNull('slug')->get());
+    //     $collection->map(function ($item) {
+    //         $item->slug = Str::slug($item->name, '_');
+    //         $item->save();
+    //     });
+    // }
 }

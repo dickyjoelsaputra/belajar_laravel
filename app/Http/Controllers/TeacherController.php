@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TeacherCreated;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use App\Listeners\CreatedTeacherLog;
 
 class TeacherController extends Controller
 {
@@ -27,6 +29,8 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::create($request->all());
 
+        // EVENTS
+        TeacherCreated::dispatch($teacher);
         return redirect('/teachers');
     }
 }

@@ -122,4 +122,102 @@ middlewere
 php artisan make:middleware MustAdmin
 
 
+// blade templating
+php artisan make:component Alert
 
+
+// slug
+php artisan make:migration add_slug_column_to_students_table
+
+https://github.com/cviebrock/eloquent-sluggable
+
+composer require cviebrock/eloquent-sluggable:^9.0
+
+
+// debugging laravel atau loging
+APP_DEBUG=false
+https://github.com/opcodesio/log-viewer
+http://127.0.0.1:8000/log-viewer
+
+// UUID
+
+
+// array chunk
+seeder untuk memasukan 10000 data denga cepat
+
+$faker = Factory::create();
+for($i=0; $i < 10000; $i++){
+    $data[] = [
+        'name' => $faker->name(),
+        'gender' => Arr::random(['L','P']),
+        'nis' => mt_rand(00001,99999),
+        'class_id' => Arr::random(['1','2','3','4'])
+    ]
+};
+
+foreach(array_chunk($data,1000) as $item){
+    Student::insert($item);
+}
+
+// Accessor dan mutator setter getter
+https://laravel.com/docs/10.x/eloquent-mutators
+
+
+// mailer
+
+mengirim email sampai mengirim email terkirim
+
+https://mailtrap.io/inboxes/2111604/messages
+
+php artisan make:mail TestSendEmail
+
+
+// laravel events untuk log activity
+https://laravel.com/docs/10.x/eloquent#events-using-closures
+
+// event listener // observer
+jika banyak events gunakan observer
+php artisan make:observer StudentObserver --model=Student
+
+To register an observer, you need to call the observe method on the model you wish to observe. You may register observers in the boot method of your application's App\Providers\EventServiceProvider service provider:
+
+// event listener // multiple listener
+https://laravel.com/docs/10.x/events#introduction
+php artisan make:event TeacherCreated
+
+// email queque
+https://laravel.com/docs/10.x/mail#queueing-mail
+https://laravel.com/docs/10.x/queues
+
+buat job terlebih dahulu
+https://laravel.com/docs/10.x/queues#creating-jobs
+
+https://laravel.com/docs/10.x/queues#max-attempts
+https://laravel.com/docs/10.x/queues#driver-prerequisites
+
+dispatch data dari controller
+
+php artisan queue:work
+
+// multipler guards
+
+table teacher bisa di tambahkan
+config/auth.php
+tambahkan
+auth::guard('teacher')
+
+// polymorphic relationship one to one
+https://laravel.com/docs/10.x/eloquent-relationships#polymorphic-relationships
+contohnya table User dan Post memiliki banyak gambar tapi hanya ingin 1 model database (Image)
+maka dapat dibuat menggunakan 1 table saja , hanya butuh kolom
+    imageable_id - integer
+    imageable_type - string
+id dari user/post dan nama Model User/Post
+
+
+// rate limiter
+https://laravel.com/docs/10.x/rate-limiting#main-content
+https://laravel.com/docs/10.x/routing#rate-limiting
+
+
+// excel

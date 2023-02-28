@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             // parent dulu
             // ClassRoomSeeder::class,
             // baru childern nya
+            // RoleSeeder::class
             StudentSeeder::class
         ]);
     }

@@ -4,9 +4,9 @@
 
 @section('content')
 
-@auth
-    
-@endauth
+    @auth
+
+    @endauth
 
     <div class="my-5 d-flex justify-content-between">
         <a class="btn btn-primary" href="/student-add">Add Data</a>
@@ -55,7 +55,7 @@
                     <td>{{ $student->class->name }}</td>
                     {{-- <td>{{ $student->class->teachers->name }}</td> --}}
                     <td>
-                        <a href="/student/{{ $student->id }}">detail</a>
+                        <a href="/student/{{ $student->slug }}">detail</a>
                         <a href="/student-edit/{{ $student->id }}">edit</a>
                         <form action="/student-delete/{{ $student->id }}" method="post">
                             @csrf
