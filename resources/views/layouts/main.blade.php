@@ -43,6 +43,7 @@
 
                 </ul>
                 @if (Auth::user())
+                    <a class="nav-link me-5" href="/change-password">Change Password</a>
                     <a class="nav-link" href="/logout">Logout</a>
                 @endif
             </div>

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Student;
 use App\Models\ClassRoom;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\New_;
 use App\Models\Extracurricular;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Session\Session;
@@ -327,4 +329,12 @@ class StudentController extends Controller
     //         $item->save();
     //     });
     // }
+
+    public function exportpdf()
+    {
+
+        $students = Student::all();
+        $pdf = Pdf::loadView('pdf.invoice', ['students' => $students]);
+        return $pdf->download('export-student-' . Carbon::now()->timestamp . '.pdf');
+    }
 }

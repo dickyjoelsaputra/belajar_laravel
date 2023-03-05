@@ -220,4 +220,41 @@ https://laravel.com/docs/10.x/rate-limiting#main-content
 https://laravel.com/docs/10.x/routing#rate-limiting
 
 
-// excel
+// excel export
+php artisan make:model Country -m -c
+php artisan make:model City -m -c
+https://laravel-excel.com/
+extension:gd //php.ini
+php artisan make:export UsersExport --model=User
+melakukan query data
+https://docs.laravel-excel.com/3.1/exports/from-query.html
+
+untuk form view
+https://docs.laravel-excel.com/3.1/exports/from-view.html
+
+// excel import
+php artisan make:import CityImport --model=City
+https://docs.laravel-excel.com/3.1/imports/model.html
+dengan heading
+https://docs.laravel-excel.com/3.1/imports/heading-row.html
+dengan collection supaya bisa input string
+https://docs.laravel-excel.com/3.1/imports/collection.html
+
+
+// upsert
+singkatan dari =
+jika data tidak ada = create , jika data ada = create
+mirip seperti if else
+$flight = Flight::updateOrCreate(
+    // jika data terpenuhi dan data ada di database
+    ['departure' => 'Oakland', 'destination' => 'San Diego'],
+    // maka lakukan hal berikut
+    ['price' => 99, 'discounted' => 1]
+);
+
+// ganti password dengan validasi
+
+
+// export untuk dom pdf
+https://github.com/barryvdh/laravel-dompdf
+

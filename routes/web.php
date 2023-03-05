@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\SendEmail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -34,6 +35,9 @@ Route::get('/login', [AuthController::class, 'login'])->name('login')->middlewar
 // login limiter = 3
 Route::post('/login', [AuthController::class, 'authenticate'])->middleware('guest')->middleware('throttle:login');
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
+// ganti password
+Route::get('/change-password', [AuthController::class, 'changepassword'])->middleware('auth');
+Route::post('/change-password', [AuthController::class, 'changepasswordProcess'])->middleware('auth');
 
 Route::get('/students', [StudentController::class, 'index'])->middleware('auth');
 Route::get('/student/{slug}', [StudentController::class, 'show'])->middleware('auth');
@@ -41,6 +45,8 @@ Route::get('/student-add', [StudentController::class, 'create'])->middleware('au
 Route::post('/student', [StudentController::class, 'store'])->middleware('auth');
 Route::get('/student-edit/{id}', [StudentController::class, 'edit'])->middleware('auth');
 Route::put('/student/{id}', [StudentController::class, 'update'])->middleware('auth');
+
+Route::get('/export-pdf', [StudentController::class, 'exportpdf'])->middleware('auth');
 
 Route::delete('/student-delete/{id}', [StudentController::class, 'destroy'])->middleware(['auth', 'must-admin']);
 
@@ -90,3 +96,17 @@ Route::get('/test/{id}', [TestController::class, 'show']);
 // send email
 
 Route::get('/send-email', [SendEmail::class, 'index']);
+
+// untuk EXCEL
+
+Route::get('/cities', [CityController::class, 'index']);
+Route::get('/city-export', [CityController::class, 'exportcity']);
+Route::get('/city-export-fv', [CityController::class, 'exportcity2']);
+// Route::get('/city-export/{country_id}', [CityController::class, 'exportcity']);
+
+Route::post('/city-import', [CityController::class, 'importcity']);
+
+    // public function collection()
+    // {
+    //     return City::all();
+    // }

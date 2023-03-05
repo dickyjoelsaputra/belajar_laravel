@@ -10,6 +10,7 @@
 
     <div class="my-5 d-flex justify-content-between">
         <a class="btn btn-primary" href="/student-add">Add Data</a>
+        <a class="btn btn-info" href="/export-pdf">Export to pdf</a>
         <a class="btn btn-info" href="/student-deleted">Show Deleted Data</a>
     </div>
 
